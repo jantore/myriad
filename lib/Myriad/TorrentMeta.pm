@@ -1,7 +1,15 @@
 package Myriad::TorrentMeta;
 
-use base qw/Class::Accessor::Fast/;
-__PACKAGE__->mk_accessors( qw/parent_directory files name piece_length announce comment/ );
+use base qw{ Class::Accessor::Fast };
+
+__PACKAGE__->mk_accessors(qw{
+    parent_directory
+    files
+    name
+    piece_length
+    announce
+    comment
+});
 
 use Digest::SHA1;
 use Bencode;
@@ -29,9 +37,9 @@ sub add_file {
 
     #my $path = shift;
     if(ref $path) {
-	push(@{ $self->files }, $path);
+        push(@{ $self->files }, $path);
     } else {
-	
+
     }
 
     #push(@{ $self->files }, { file => $file, path => $path });
@@ -44,21 +52,21 @@ sub read_directory {
     $self->parent_directory($path);
     
     $path->recurse(callback => sub {
-	my ($p) = @_;
+        my ($p) = @_;
 	return unless -f $p;
-	my $file = $p->relative($path);
-	$self->add_file($file);
+        my $file = $p->relative($path);
+        $self->add_file($file);
     });
 
     unless(defined($self->name)) {
-	$self->name( $path->relative($path->parent)->stringify );
+        $self->name( $path->relative($path->parent)->stringify );
     }
 
     #$self->_load_directory($directory);
 #     find(sub {
-#     	my ($path, $file) = ($File::Find::dir, $File::Find::name);
-# 	return unless -f;
-# 	$self->add_file($path, $file);
+#             my ($path, $file) = ($File::Find::dir, $File::Find::name);
+#         return unless -f;
+#         $self->add_file($path, $file);
 #     }, $directory);
     
 
@@ -74,31 +82,31 @@ sub encode {
     my @files = @{ $self->files };
 
     if( scalar(@files) == 1 ) {
-	# Single file - simpler info structure.
-	my $file = shift(@files);
-	$info->{'name'}   = $self->name || $file->basename;
-	$info->{'length'} = $file->stat->size;
+        # Single file - simpler info structure.
+        my $file = shift(@files);
+        $info->{'name'}   = $self->name || $file->basename;
+        $info->{'length'} = $file->stat->size;
     } else {
-	# Multiple files
-	$info->{'name'}  = $self->name
-	    ;#|| $self->parent_directory->relative($self->parent_directory->parent)->stringify;
-	$info->{'files'} = [ map {
-	    {
-		'length' => $_->absolute($self->parent_directory)->stat->size,
-		'path'   => [ split(/\//, $_->stringify) ],
-	    }
-	} @files ];
+        # Multiple files
+        $info->{'name'}  = $self->name
+            ;#|| $self->parent_directory->relative($self->parent_directory->parent)->stringify;
+        $info->{'files'} = [ map {
+            {
+                'length' => $_->absolute($self->parent_directory)->stat->size,
+                'path'   => [ split(/\//, $_->stringify) ],
+            }
+        } @files ];
     }
     $info->{'piece length'} = $self->piece_length;
     $info->{'pieces'}       = $self->hash_pieces;
 
     # Create the metadata structure.
     my $data = {
-	'info'          => $info,
-	'announce'      => $self->announce,
-	'creation date' => time(),
-	'created by'    => 'Myriad',
-	defined($self->comment) ? ('comment' => $self->comment ) : (),
+        'info'          => $info,
+        'announce'      => $self->announce,
+        'creation date' => time(),
+        'created by'    => 'Myriad',
+        defined($self->comment) ? ('comment' => $self->comment ) : (),
     };
 
 
@@ -119,24 +127,24 @@ sub hash_pieces {
 
     my $filesdone = 0;
     foreach my $file (@files) {
-	$filesdone++;
-	#print("Processing file " . $file . "\n");
-	my $fh = $file->absolute($self->parent_directory)->openr();
-	#open(FILE, "<$file") or die("Can't open file for reading");
+        $filesdone++;
+        #print("Processing file " . $file . "\n");
+        my $fh = $file->absolute($self->parent_directory)->openr();
+        #open(FILE, "<$file") or die("Can't open file for reading");
 
-	my $numread, $data;
-	while( ($numread = read($fh, $data, $maxlength - $read)) != 0 ) {
-	    $read += $numread;
-	    $digest->add($data);
+        my $numread, $data;
+        while( ($numread = read($fh, $data, $maxlength - $read)) != 0 ) {
+            $read += $numread;
+            $digest->add($data);
 
-	    if( $read == $maxlength ) {
-		$pieces .= $digest->digest;
-		print STDERR "Finished piece " . (length($pieces) / 20) . ", $filesdone files done.\n";
+            if( $read == $maxlength ) {
+                $pieces .= $digest->digest;
+                print STDERR "Finished piece " . (length($pieces) / 20) . ", $filesdone files done.\n";
 
-		$digest->reset;
-		$read = 0;
-	    }
-	}
+                $digest->reset;
+                $read = 0;
+            }
+        }
     }
 
     $pieces .= $digest->digest;

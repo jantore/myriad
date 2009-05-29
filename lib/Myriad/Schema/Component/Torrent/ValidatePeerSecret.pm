@@ -1,8 +1,6 @@
 package Myriad::Schema::Component::Torrent::ValidateAnnounce;
 
-use base qw/DBIx::Class/;
-
-use Myriad::Util qw/berror/;
+use base qw{ DBIx::Class };
 
 sub announce {
     my $self = shift;

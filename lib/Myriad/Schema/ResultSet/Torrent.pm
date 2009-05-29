@@ -1,6 +1,6 @@
 package Myriad::Schema::ResultSet::Torrent;
 
-use base qw/DBIx::Class::ResultSet/;
+use base qw{ DBIx::Class::ResultSet };
 
 sub active {
     return shift->search({ active => 1 });
@@ -13,10 +13,10 @@ sub num_completes {
 sub transferred_bytes {
     return shift->search(
         {},
-	{
-	    'select' => [ { 'sum' => 'size * num_completes' } ],
-	    'as'     => [ 'total_transfer' ],
-	}
+        {
+            'select' => [ { 'sum' => 'size * num_completes' } ],
+            'as'     => [ 'total_transfer' ],
+        }
     )->first->get_column('total_transfer');
 }
 
