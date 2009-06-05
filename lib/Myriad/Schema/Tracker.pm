@@ -14,32 +14,31 @@ __PACKAGE__->table('Tracker');
 
 __PACKAGE__->add_columns(
     'host' => {
-        data_type => 'varchar',
-        size => 128,
-        is_nullable => 0,
+        data_type     => 'varchar',
+        size          => 128,
+        is_nullable   => 0,
     },
     'title' => {
-        data_type => 'text',
-        size => undef,
-        is_nullable => 0,
-        default_value => undef,
+        data_type     => 'varchar',
+        size          => 128,
+        is_nullable   => 0,
     },
     'active' => {
-        data_type => 'tinyint',
-        size => 1,
-        is_nullable => 0,
+        data_type     => 'integer',
+        size          => 1,
+        is_nullable   => 0,
         default_value => 1,
     },
     'allow_ipv4' => {
-        data_type => 'tinyint',
-        size => 1,
-        is_nullable => 0,
+        data_type     => 'integer',
+        size          => 1,
+        is_nullable   => 0,
         default_value => 1,
     },
     'allow_ipv6' => {
-        data_type => 'tinyint',
-        size => 1,
-        is_nullable => 0,
+        data_type     => 'integer',
+        size          => 1,
+        is_nullable   => 0,
         default_value => 1,
     },
 );

@@ -20,27 +20,53 @@ __PACKAGE__->add_columns(
         data_type => 'blob',
         size => '20',
         is_nullable => 0,
-        default_value => undef,
     },
     'tracker' => {
-        data_type => 'varchar',
-        size => '128',
-        is_nullable => 0,
-        default_value => undef,
+        data_type     => 'varchar',
+        size          => '128',
+        is_nullable   => 0,
     },
     'created' => {
-        data_type => 'datetime',
-        size => undef,
-        is_nullable => 0,
+        data_type     => 'integer',
+        size          => 10,
+        is_nullable   => 0,
+    },
+    'modified' => {
+        data_type     => 'integer',
+        size          => 10,
+        is_nullable   => 1,
         default_value => undef,
     },
-    'modified',
-    'active',
-    'size',
-    'title',
-    'num_seeders',
-    'num_leechers',
-    'num_completes',
+    'active' => {
+        data_type     => 'integer',
+        size          => 1,
+        is_nullable   => 0,
+        default_value => 1,
+    },
+    'size' => {
+        data_type     => 'integer',
+        is_nullable   => 0,
+    },
+    'title' => {
+        data_type     => 'varchar',
+        size          => '128',
+        is_nullable   => 0,
+    },
+    'num_seeders' => {
+        data_type     => 'integer',
+        is_nullable   => 0,
+        default_value => 0,
+    },
+    'num_leechers' => {
+        data_type     => 'integer',
+        is_nullable   => 0,
+        default_value => 0,
+    },
+    'num_completes' => {
+        data_type     => 'integer',
+        is_nullable   => 0,
+        default_value => 0,
+    },
 );
 
 __PACKAGE__->set_primary_key( 'info_hash', 'tracker' );
