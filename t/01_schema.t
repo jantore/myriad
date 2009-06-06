@@ -1,12 +1,7 @@
-#!/usr/bin/env perl
 use strict;
-use warnings;
+use Test::More tests => 4;
 
-use Test::More tests => 5;
-
-BEGIN {
-    use_ok( 'Myriad::Schema' );
-}
+use Myriad::Schema;
 
 my $schema = Myriad::Schema->connect;
 isa_ok($schema, 'Myriad::Schema');
