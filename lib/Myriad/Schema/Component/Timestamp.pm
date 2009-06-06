@@ -3,17 +3,17 @@ package Myriad::Schema::Component::Timestamp;
 use base qw{ DBIx::Class };
 
 sub insert {
-    my $self = shift;
+    my ($self) = @_;
 
-    $self->created(time());
+    $self->created(time()) unless defined $self->created;
     return $self->next::method(@_);
 }
 
 sub update {
-    my $self = shift;
+    my ($self, $values) = @_;
 
-    $self->modified(time());
-    return $self->next::method(@_);
+    $values{'modified'} = time() unless defined $values{'modified'};
+    return $self->next::method($values);
 }
 
 1;
