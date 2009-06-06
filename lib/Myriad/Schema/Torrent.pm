@@ -10,6 +10,7 @@ __PACKAGE__->load_components(qw{
     +Myriad::Schema::Component::Torrent::Announce
     +Myriad::Schema::Component::Torrent::GetPeers
     +Myriad::Schema::Component::Torrent::Scrape
+    +Myriad::Schema::Component::Timestamp
     Core
 });
 
