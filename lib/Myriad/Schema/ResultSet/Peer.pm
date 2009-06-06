@@ -2,6 +2,8 @@ package Myriad::Schema::ResultSet::Peer;
 
 use base qw{ DBIx::Class::ResultSet };
 
+use Carp;
+
 sub active {
     my ($self) = @_;
 
