@@ -6,10 +6,9 @@ sub active {
     my ($self) = @_;
 
     # TODO Centralized configuration of announce interval.
-    # TODO This is MySQL specific. Replace this with application logic.
     return $self->search({
         state    => Myriad::Schema::Peer::STARTED,
-        modified => \q{> DATE_SUB(NOW(), INTERVAL 2400 SECOND)},
+        modified => { '>' => time() - 2400 },
     });
 }
 
