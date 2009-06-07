@@ -11,6 +11,7 @@ use constant {
 
 __PACKAGE__->load_components(qw{
     +Myriad::Schema::Component::Peer::CountryLookup
+    +Myriad::Schema::Component::Peer::Rate
     +Myriad::Schema::Component::Timestamp
     Core
 });
