@@ -1,4 +1,4 @@
-package Myriad::Schema::Component::Torrent::ValidateAnnounce;
+package Myriad::Schema::Component::Torrent::ValidatePeerSecret;
 
 use base qw{ DBIx::Class };
 
