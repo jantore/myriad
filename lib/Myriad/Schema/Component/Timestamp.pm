@@ -12,7 +12,7 @@ sub insert {
 sub update {
     my ($self, $values) = @_;
 
-    $values{'modified'} = time() unless defined $values{'modified'};
+    $values->{'modified'} = time() unless defined $values->{'modified'};
     return $self->next::method($values);
 }
 
