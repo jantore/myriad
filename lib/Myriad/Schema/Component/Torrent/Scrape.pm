@@ -1,4 +1,4 @@
-package Myriad::Schema::Component::Torrent::GetPeers;
+package Myriad::Schema::Component::Torrent::Scrape;
 
 use base qw{ DBIx::Class };
 
