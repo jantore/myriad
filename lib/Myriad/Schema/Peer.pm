@@ -78,9 +78,10 @@ __PACKAGE__->add_columns(
         default_value => 0.0,
     },
     'state' => {
-        data_type   => 'integer',
-        size        => 1,
-        is_nullable => 0,
+        data_type     => 'integer',
+        size          => 1,
+        is_nullable   => 0,
+        default_value => STARTED,
     },
     'secret' => {
         data_type     => 'blob',
