@@ -19,7 +19,6 @@ sub announce {
         downloaded => $params{'downloaded'},
         uploaded   => $params{'uploaded'},
         remaining  => $params{'left'},
-        modified   => \q{NOW()},
     };
 
 
