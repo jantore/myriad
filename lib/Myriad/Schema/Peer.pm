@@ -1,5 +1,8 @@
 package Myriad::Schema::Peer;
 
+use strict;
+use warnings;
+
 use base qw{ DBIx::Class };
 
 use NetAddr::IP;

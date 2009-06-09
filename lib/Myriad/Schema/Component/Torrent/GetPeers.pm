@@ -1,5 +1,8 @@
 package Myriad::Schema::Component::Torrent::GetPeers;
 
+use strict;
+use warnings;
+
 use base qw{ DBIx::Class };
 
 sub announce {

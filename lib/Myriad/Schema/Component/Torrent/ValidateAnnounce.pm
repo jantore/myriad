@@ -1,5 +1,8 @@
 package Myriad::Schema::Component::Torrent::ValidateAnnounce;
 
+use strict;
+use warnings;
+
 use base qw{ DBIx::Class };
 
 use Myriad::Util qw{ berror };

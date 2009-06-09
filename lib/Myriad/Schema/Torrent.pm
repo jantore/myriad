@@ -1,5 +1,8 @@
 package Myriad::Schema::Torrent;
 
+use strict;
+use warnings;
+
 use base qw{ DBIx::Class };
 
 use Myriad::Schema::Peer;

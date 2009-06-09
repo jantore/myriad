@@ -1,5 +1,8 @@
 package Myriad::Schema::ResultSet::Torrent;
 
+use strict;
+use warnings;
+
 use base qw{ DBIx::Class::ResultSet };
 
 sub active {

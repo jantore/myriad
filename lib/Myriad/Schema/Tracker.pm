@@ -1,5 +1,8 @@
 package Myriad::Schema::Tracker;
 
+use strict;
+use warnings;
+
 use base qw{ DBIx::Class };
 
 use Carp;

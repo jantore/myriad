@@ -1,5 +1,8 @@
 package Myriad::Schema::Component::Peer::CountryLookup;
 
+use strict;
+use warnings;
+
 use base qw{ DBIx::Class };
 
 use Carp;
@@ -24,7 +27,7 @@ sub country {
         return $self->ipcountry->inet_atocc( $self->address->addr );
     } else {
         carp "No IP::Country::Fast instance loaded, module not installed?";
-        return undef;
+        return;
     }
 }
 

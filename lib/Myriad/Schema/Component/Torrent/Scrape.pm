@@ -1,5 +1,8 @@
 package Myriad::Schema::Component::Torrent::Scrape;
 
+use strict;
+use warnings;
+
 use base qw{ DBIx::Class };
 
 sub scrape {
