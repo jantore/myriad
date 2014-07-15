@@ -135,7 +135,7 @@ sub hash_pieces {
         my $fh = $file->absolute($self->parent_directory)->openr();
         #open(FILE, "<$file") or die("Can't open file for reading");
 
-        my $numread, $data;
+        my ($numread, $data);
         while( ($numread = read($fh, $data, $maxlength - $read)) != 0 ) {
             $read += $numread;
             $digest->add($data);
