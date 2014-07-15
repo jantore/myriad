@@ -5,6 +5,8 @@ use warnings;
 
 use base qw{ DBIx::Class::ResultSet };
 
+use Myriad::Schema::Peer;
+
 sub active {
     my ($self) = @_;
 

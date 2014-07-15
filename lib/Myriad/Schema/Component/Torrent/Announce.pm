@@ -5,6 +5,7 @@ use warnings;
 
 use base qw{ DBIx::Class };
 
+use Myriad::Schema::Peer;
 use Myriad::Util qw{ berror };
 use NetAddr::IP;
 
