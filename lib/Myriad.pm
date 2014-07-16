@@ -13,7 +13,10 @@ Myriad - a DBIx::Class-based BitTorrent tracker
 =head1 SYNOPSIS
 
   my $myriad = Myriad::Schema->connect('dbi:mysql:database=tracker', '', '');
-  my $peers = $myriad->announce({});
+  my $peers = $myriad->resultset('Tracker')
+      ->active
+      ->find('tracker.example.net')
+      ->announce({});
 
 =head1 DESCRIPTION
 
