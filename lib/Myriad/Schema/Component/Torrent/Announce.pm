@@ -9,10 +9,23 @@ use Myriad::Schema::Peer;
 use Myriad::Util qw{ berror };
 use NetAddr::IP;
 
+use Carp;
+
 sub announce {
     my $self = shift;
     my %params = @_;
 
+    my $type = $self->result_source->storage->sqlt_type;
+
+    my $now;
+    if($type eq 'MySQL' or $type eq 'PostgreSQL') {
+        $now = q{NOW()};
+    } elsif($type eq 'SQLite') {
+        $now = q{datetime('now')};
+    } else {
+        carp "Unrecognized database driver, time will be NULL";
+        $now = q{NULL};
+    }
 
     ###
     # Set up attributes that would be used for both update and create.
@@ -23,9 +36,8 @@ sub announce {
         downloaded => $params{'downloaded'},
         uploaded   => $params{'uploaded'},
         remaining  => $params{'left'},
-        modified   => \q{NOW()},
+        modified   => \$now,
     };
-
 
     ###
     # Update or create the peer entry.
