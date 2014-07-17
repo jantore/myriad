@@ -7,14 +7,30 @@ use base qw{ DBIx::Class::ResultSet };
 
 use Myriad::Schema::Peer;
 
+use Carp;
+
 sub active {
     my ($self) = @_;
 
     # TODO Centralized configuration of announce interval.
-    # TODO This is MySQL specific. Replace this with application logic.
+
+    my $type = $self->result_source->storage->sqlt_type;
+
+    my $modified;
+    if($type eq 'MySQL') {
+        $modified = q{> DATE_SUB(NOW(), INTERVAL 2400 SECOND)};
+    } elsif($type eq 'PostgreSQL') {
+        $modified = q{> now() - interval '2400 seconds'};
+    } elsif($type eq 'SQLite') {
+        $modified = q{> datetime(strftime('%s', 'now') - 2400, 'unixepoch')};
+    } else {
+        carp "Unrecognized database driver, using application time";
+        $modified = sprintf('> %d', time() - 2400);
+    }
+
     return $self->search({
         state    => Myriad::Schema::Peer::STARTED,
-        modified => \q{> DATE_SUB(NOW(), INTERVAL 2400 SECOND)},
+        modified => \$modified,
     });
 }
 
