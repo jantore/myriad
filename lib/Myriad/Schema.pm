@@ -22,6 +22,20 @@ sub populate_test {
         title     => 'Test Torrent',
         active    => 1,
     });
+
+    my $seeder = $torrent->peers->create({
+        peer_id   => 'TESTSEEDER',
+        port      => 12345,
+        address   => '1.1.1.1',
+        remaining => 0,
+    });
+
+    my $leecher = $torrent->peers->create({
+        peer_id   => 'TESTLEECHER',
+        port      => 54321,
+        address   => '2.2.2.2',
+        remaining => 1000,
+    });
 }
 
 1;
