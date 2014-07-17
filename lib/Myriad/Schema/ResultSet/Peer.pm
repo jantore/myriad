@@ -43,7 +43,21 @@ sub incomplete {
 }
 
 sub randomize {
-    return shift->search({}, { order_by => 'RAND()' });
+    my ($self) = @_;
+
+    my $type = $self->result_source->storage->sqlt_type;
+
+    my $random;
+    if($type eq 'MySQL') {
+        $random = 'RAND()';
+    } elsif($type eq 'PostgreSQL' || $type eq 'SQLite') {
+        $random = 'RANDOM()';
+    } else {
+        carp "Unrecognized database driver, no randomizing done";
+        return $self;
+    }
+
+    return $self->search({}, { order_by => $random });
 }
 
 sub descending {
