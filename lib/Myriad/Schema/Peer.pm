@@ -39,11 +39,13 @@ __PACKAGE__->add_columns(
     'created' => {
         data_type   => 'integer',
         size        => 10,
+        default_value => \'CURRENT_TIMESTAMP',
         is_nullable => 0,
     },
     'modified' => {
         data_type   => 'integer',
         size        => 10,
+        default_value => \'CURRENT_TIMESTAMP',
         is_nullable => 0,
     },
     'port' => {
@@ -80,9 +82,10 @@ __PACKAGE__->add_columns(
         default_value => 0.0,
     },
     'state' => {
-        data_type   => 'integer',
-        size        => 1,
-        is_nullable => 0,
+        data_type     => 'integer',
+        size          => 1,
+        default_value => STARTED,
+        is_nullable   => 0,
     },
     'secret' => {
         data_type     => 'blob',
