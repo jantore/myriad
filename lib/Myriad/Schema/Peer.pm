@@ -70,8 +70,7 @@ __PACKAGE__->add_columns(
     },
     'remaining' => {
         data_type     => 'integer',
-        is_nullable   => 1,
-        default_value => undef,
+        is_nullable   => 0,
     },
     'downrate' => {
         data_type     => 'float',
