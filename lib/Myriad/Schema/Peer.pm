@@ -39,13 +39,11 @@ __PACKAGE__->add_columns(
     'created' => {
         data_type   => 'integer',
         size        => 10,
-        default_value => \'CURRENT_TIMESTAMP',
         is_nullable => 0,
     },
     'modified' => {
         data_type   => 'integer',
         size        => 10,
-        default_value => \'CURRENT_TIMESTAMP',
         is_nullable => 0,
     },
     'port' => {
