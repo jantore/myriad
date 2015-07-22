@@ -13,20 +13,11 @@ sub active {
     my ($self) = @_;
 
     # TODO Centralized configuration of announce interval.
-
-    my $type = $self->result_source->storage->sqlt_type;
-
-    my $modified;
-    if($type eq 'MySQL') {
-        $modified = q{> DATE_SUB(NOW(), INTERVAL 2400 SECOND)};
-    } elsif($type eq 'PostgreSQL') {
-        $modified = q{> now() - interval '2400 seconds'};
-    } elsif($type eq 'SQLite') {
-        $modified = q{> datetime(strftime('%s', 'now') - 2400, 'unixepoch')};
-    } else {
-        carp "Unrecognized database driver, using application time";
-        $modified = sprintf('> %d', time() - 2400);
-    }
+    my $modified = {
+        mysql      => q{> DATE_SUB(NOW(), INTERVAL 2400 SECOND)},
+        postgresql => q{> EXTRACT(EPOCH FROM (NOW() - INTERVAL '2400 seconds'))},
+        sqlite     => q{> strftime('%s', 'now') - 2400},
+    }->{lc $self->result_source->storage->sqlt_type};
 
     return $self->search({
         state    => Myriad::Schema::Peer::STARTED,
