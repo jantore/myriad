@@ -13,6 +13,7 @@ use constant {
 };
 
 __PACKAGE__->load_components(qw{
+    +Myriad::Schema::Component::Timestamp
     +Myriad::Schema::Component::Peer::CountryLookup
     InflateColumn
     Core

@@ -9,6 +9,7 @@ use Myriad::Schema::Peer;
 use Myriad::Util qw{ berror };
 
 __PACKAGE__->load_components(qw{
+    +Myriad::Schema::Component::Timestamp
     +Myriad::Schema::Component::Torrent::ValidateAnnounce
     +Myriad::Schema::Component::Torrent::Announce
     +Myriad::Schema::Component::Torrent::GetPeers
@@ -30,16 +31,14 @@ __PACKAGE__->add_columns(
         is_nullable   => 0,
     },
     'created' => {
-        data_type     => 'integer',
-        size          => 10,
-        default_value => \'CURRENT_TIMESTAMP',
-        is_nullable   => 0,
+        data_type   => 'integer',
+        size        => 10,
+        is_nullable => 0,
     },
     'modified' => {
-        data_type     => 'integer',
-        size          => 10,
-        is_nullable   => 1,
-        default_value => undef,
+        data_type   => 'integer',
+        size        => 10,
+        is_nullable => 0,
     },
     'active' => {
         data_type     => 'integer',

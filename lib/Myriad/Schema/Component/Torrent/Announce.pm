@@ -15,12 +15,6 @@ sub announce {
     my $self = shift;
     my %params = @_;
 
-    my $now = {
-        mysql      => q{ UNIX_TIMESTAMP() },
-        postgresql => q{ EXTRACT(EPOCH FROM NOW()) },
-        sqlite     => q{ STRFTIME('%s', 'now') }
-    }->{lc $self->result_source->storage->sqlt_type};
-
     ###
     # Set up attributes that would be used for both update and create.
     ##
@@ -30,7 +24,6 @@ sub announce {
         downloaded => $params{'downloaded'},
         uploaded   => $params{'uploaded'},
         remaining  => $params{'left'},
-        modified   => \$now,
     };
 
     ###
@@ -60,7 +53,6 @@ sub announce {
 
         if( defined($params{'event'}) && $params{'event'} eq 'started' ) {
             $attributes->{'peer_id'} = $params{'peer_id'};
-            $attributes->{'created'} = \$now;
             $attributes->{'secret'} = $params{'key'} if defined $params{'key'};
 
             $self->peers->create( $attributes );
