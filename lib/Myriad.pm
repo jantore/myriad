@@ -29,7 +29,7 @@ Jan Tore Morken <dist@jantore.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2018-2014 by Jan Tore Morken.
+This software is copyright (c) 2008-2015 by Jan Tore Morken.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
