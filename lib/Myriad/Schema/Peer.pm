@@ -14,6 +14,7 @@ use constant {
 
 __PACKAGE__->load_components(qw{
     +Myriad::Schema::Component::Peer::CountryLookup
+    InflateColumn
     Core
 });
 
@@ -105,15 +106,28 @@ __PACKAGE__->set_primary_key('peer_id', 'info_hash', 'tracker');
 
 __PACKAGE__->resultset_class('Myriad::Schema::ResultSet::Peer');
 
-__PACKAGE__->inflate_column(
-    'address',
-    {
-        inflate => sub { return NetAddr::IP->new(shift); },
-        deflate => sub {
-            my $a = shift;
-            return ref($a) ? $a->addr : $a;
-        }
+__PACKAGE__->inflate_column('address' => {
+    inflate => sub { return NetAddr::IP->new(shift); },
+    deflate => sub {
+        my $a = shift;
+        return ref($a) ? $a->addr : $a;
     }
-);
+});
+
+__PACKAGE__->inflate_column('created' => {
+    inflate => sub { DateTime->from_epoch(epoch => shift) },
+    deflate => sub {
+        my $t = shift;
+        return ref($t) ? $t->epoch : $t;
+    }
+});
+
+__PACKAGE__->inflate_column('modified' => {
+    inflate => sub { DateTime->from_epoch(epoch => shift) },
+    deflate => sub {
+        my $t = shift;
+        return ref($t) ? $t->epoch : $t;
+    }
+});
 
 1;
