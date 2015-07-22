@@ -6,6 +6,24 @@ use base qw{ DBIx::Class::Schema };
 
 __PACKAGE__->load_classes(qw{ Tracker Torrent Peer });
 
+use DateTime;
+
+sub now {
+    my $storage = shift->storage;
+
+    my $q = {
+        mysql      => q{ SELECT UNIX_TIMESTAMP()          },
+        postgresql => q{ SELECT EXTRACT(EPOCH FROM NOW()) },
+        sqlite     => q{ SELECT STRFTIME('%s', 'now')     },
+    }->{lc $storage->sqlt_type};
+
+    return DateTime->from_epoch(epoch => $storage->dbh_do(
+        sub {
+            my ($s, $dbh) = @_;
+            $dbh->selectrow_arrayref($q)->[0];
+        }
+    ));
+}
 
 sub populate_test {
     my ($schema) = @_;

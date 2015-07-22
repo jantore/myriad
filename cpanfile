@@ -5,6 +5,7 @@ requires "Class::Accessor::Fast" => "0";
 requires "DBIx::Class" => "0";
 requires "DBIx::Class::ResultSet" => "0";
 requires "DBIx::Class::Schema" => "0";
+requires "DateTime" => "0";
 requires "Digest::SHA1" => "0";
 requires "Exporter" => "0";
 requires "IP::Country::Fast" => "0";
