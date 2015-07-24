@@ -1,0 +1,21 @@
+language: perl
+perl:
+  - "5.20"
+  - "5.18"
+  - "5.16"
+  - "5.14"
+  - "5.12"
+  - "5.10"
+env:
+  - "MYRIAD_SQLITE_DSN=dbi:SQLite:dbname=:memory: MYRIAD_POSTGRESQL_DSN=dbi:Pg:dbname=myriad_test MYRIAD_POSTGRESQL_USER=postgres MYRIAD_MYSQL_DSN=dbi:mysql:database=myriad_test MYRIAD_MYSQL_USER=travis"
+before_install:
+  - git config --global user.name "travis-ci"
+install:
+  - cpanm --quiet --notest --skip-satisfied Dist::Zilla
+  - dzil authordeps | grep -vP '[^\w:]' | xargs -n 5 -P 10 cpanm --quiet --notest --skip-satisfied
+  - dzil listdeps | grep -vP '[^\w:]' | cpanm --verbose
+before_script:
+  - psql -U postgres -c 'CREATE DATABASE myriad_test;'
+  - mysql -e 'CREATE DATABASE myriad_test;'
+script:
+  - dzil smoke --release --author
