@@ -25,6 +25,37 @@ sub now {
     ));
 }
 
+sub connection {
+    my ($self, @info) = @_;
+    return $self if !@info;
+
+    my $schema = $self->next::method(@info);
+
+    # SQL::Translator doesn't support index sizes required by MySQL
+    # for indexing blob columns. Therefore we dynamically change the
+    # data type to binary if we're running on MySQL. This is only
+    # important when deploying the schema.
+    my $bintype = {
+        mysql      => 'binary',
+        postgresql => 'bytea',
+        sqlite     => 'blob',
+    }->{lc $schema->storage->sqlt_type};
+
+    $schema->source('Torrent')->add_column(
+        '+info_hash' => { data_type => $bintype }
+    );
+
+    $schema->source('Peer')->add_column(
+        '+peer_id' => { data_type => $bintype }
+    );
+
+    $schema->source('Peer')->add_column(
+        '+info_hash' => { data_type => $bintype }
+    );
+
+    return $schema;
+}
+
 sub populate_test {
     my ($schema) = @_;
 
