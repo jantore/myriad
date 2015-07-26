@@ -14,7 +14,7 @@ sub active {
 
     # TODO Centralized configuration of announce interval.
     my $modified = {
-        mysql      => q{> DATE_SUB(NOW(), INTERVAL 2400 SECOND)},
+        mysql      => q{> UNIX_TIMESTAMP() - 2400},
         postgresql => q{> EXTRACT(EPOCH FROM (NOW() - INTERVAL '2400 seconds'))},
         sqlite     => q{> strftime('%s', 'now') - 2400},
     }->{lc $self->result_source->storage->sqlt_type};
