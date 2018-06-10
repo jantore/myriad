@@ -47,7 +47,7 @@ __PACKAGE__->add_columns(
         default_value => 1,
     },
     'size' => {
-        data_type     => 'integer',
+        data_type     => 'bigint',
         is_nullable   => 0,
     },
     'title' => {
