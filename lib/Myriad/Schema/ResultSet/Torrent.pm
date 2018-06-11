@@ -10,7 +10,7 @@ sub active {
 }
 
 sub num_completes {
-    return shift->get_column('num_completes')->sum;
+    return shift->get_column('num_completes')->sum || 0;
 }
 
 sub transferred_bytes {
@@ -20,7 +20,7 @@ sub transferred_bytes {
             'select' => [ { 'sum' => 'size * num_completes' } ],
             'as'     => [ 'total_transfer' ],
         }
-    )->first->get_column('total_transfer');
+    )->first->get_column('total_transfer') || 0;
 }
 
 1;

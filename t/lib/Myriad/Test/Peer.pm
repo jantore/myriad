@@ -12,7 +12,9 @@ sub run {
 
     my $rs = $schema->resultset('Peer');
     isa_ok $rs => $class;
-    is $rs->count => 0 => 'still no torrents';
+    is $rs->count => 0 => 'still no peers';
+
+    is $rs->swarm_speed => 0 => 'swarm speed is zero';
 
     can_ok $class => qw{
         active complete incomplete randomize swarm_speed ascending descending

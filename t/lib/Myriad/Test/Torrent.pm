@@ -16,6 +16,9 @@ sub run {
     isa_ok $rs => $class;
     is $rs->count => 0 => 'still no torrents';
 
+    is $rs->num_completes => 0 => 'zero completes';
+    is $rs->transferred_bytes => 0 => 'transferred bytes is zero';
+
     can_ok $class => qw{
         active num_completes transferred_bytes
     };

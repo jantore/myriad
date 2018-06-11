@@ -60,13 +60,13 @@ sub ascending {
 }
 
 sub swarm_speed {
-    return 0.5 * shift->search(
+    return 0.5 * (shift->search(
         {},
         {
             'select' => [ { 'sum' => 'uprate + downrate' } ],
             'as'     => [ 'swarm_speed' ],
         }
-    )->first->get_column('swarm_speed');
+    )->first->get_column('swarm_speed') || 0);
 }
 
 1;
