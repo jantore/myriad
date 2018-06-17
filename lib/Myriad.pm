@@ -1,7 +1,7 @@
 package Myriad;
 
 use strict;
-use version; our $VERSION = version->declare("v0.0.4");
+use version; our $VERSION = version->declare("v0.1.0");
 
 1;
 __END__
