@@ -52,11 +52,11 @@ sub randomize {
 }
 
 sub descending {
-    return shift->search({}, { order_by => sprintf("%s DESC", shift) });
+    return shift->search({}, { order_by => { -desc => shift } });
 }
 
 sub ascending {
-    return shift->search({}, { order_by => sprintf("%s ASC", shift) });
+    return shift->search({}, { order_by => { -asc => shift } });
 }
 
 sub swarm_speed {

@@ -73,6 +73,9 @@ sub run {
     is $t1->peers->active->count => 3 => 'three active after announce';
 
     is $t1->peers->randomize->count => 4 => 'can randomize';
+    is $t1->peers->ascending('created')->all => 4 => 'can sort ascending';
+    is $t1->peers->descending('created')->all => 4 => 'can sort descending';
+
 #    can_ok $peer => qw{
 #        peer_id port address downloaded uploaded remaining state secret
 #    };

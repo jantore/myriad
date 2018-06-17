@@ -9,6 +9,14 @@ sub active {
     return shift->search({ active => 1 });
 }
 
+sub descending {
+    return shift->search({}, { order_by => { -desc => shift } });
+}
+
+sub ascending {
+    return shift->search({}, { order_by => { -asc => shift } });
+}
+
 sub num_completes {
     return shift->get_column('num_completes')->sum || 0;
 }

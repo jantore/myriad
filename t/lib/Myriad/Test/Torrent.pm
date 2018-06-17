@@ -55,6 +55,9 @@ sub run {
     my $torrent = $t1->torrents->find({ info_hash => "\x00" x 20 });
     isa_ok $torrent => 'Myriad::Schema::Torrent';
 
+    is $t1->torrents->ascending('created')->all => 2 => 'can sort ascending';
+    is $t1->torrents->descending('created')->all => 2 => 'can sort descending';
+
     can_ok $torrent => qw{ announce scrape };
 
     Myriad::Test::Peer->run($schema);
